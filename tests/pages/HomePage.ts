@@ -1,37 +1,74 @@
 import { Page, Locator } from '@playwright/test';
 
 /**
- * Page Object Model for the ABV.bg Home Page
+ * Page Object Model for the DemoQA.com Home Page
  */
 export class HomePage {
     readonly page: Page;
-    readonly usernameInput: Locator;
-    readonly passwordInput: Locator;
-    readonly loginButton: Locator;
+	readonly elementsCard: Locator;
+	readonly formsCard: Locator;
+	readonly alertsFrameWindowsCard: Locator;
+	readonly widgetsCard: Locator;
+	readonly interactionsCard: Locator;
+	readonly bookStoreCard: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        // Selector for the username input
-        this.usernameInput = page.locator('input[name="username"]');
-        // Selector for the password input
-        this.passwordInput = page.locator('input[name="password"]');
-        // Selector for the login button (by visible text 'Вход')
-        this.loginButton = page.getByRole('button', { name: 'Вход' });
+		// Homepage cards
+		this.elementsCard = page.locator('div').filter({ hasText: /^Elements$/ }).first();
+		this.formsCard = page.locator('div').filter({ hasText: /^Forms$/ }).first();
+		this.alertsFrameWindowsCard = page.locator('div').filter({ hasText: /^Alerts, Frame & Windows$/ }).first();
+		this.widgetsCard = page.locator('div').filter({ hasText: /^Widgets$/ }).first();
+		this.interactionsCard = page.locator('div').filter({ hasText: /^Interactions$/ }).first();
+		this.bookStoreCard = page.locator('div:nth-child(6) > div > .card-up');
     }
 
     /**
-     * Navigate to the ABV.bg home page
+     * Navigate to the DemoQA.com home page
      */
     async goto() {
-        await this.page.goto('https://www.abv.bg/');
+        await this.page.goto('https://demoqa.com/');
     }
 
     /**
-     * Log in using the provided username and password
+     * Click on the 'Elements' card on the homepage
      */
-    async login(username: string, password: string) {
-        await this.usernameInput.fill(username);
-        await this.passwordInput.fill(password);
-        await this.loginButton.click();
+    async clickElementsCard() {
+        await this.elementsCard.click();
     }
+
+	/**
+	 * Click on the 'Forms' card on the homepage
+	 */
+	async clickFormsCard() {
+		await this.formsCard.click();
+	}
+
+	/**
+	 * Click on the 'Alerts, Frame & Windows' card on the homepage
+	 */
+	async clickAlertsFrameWindowsCard() {
+		await this.alertsFrameWindowsCard.click();
+	}
+
+	/**
+	 * Click on the 'Widgets' card on the homepage
+	 */
+	async clickWidgetsCard() {
+		await this.widgetsCard.click();
+	}
+
+	/**
+	 * Click on the 'Interactions' card on the homepage
+	 */
+	async clickInteractionsCard() {
+		await this.interactionsCard.click();
+	}
+
+	/**
+	 * Click on the 'Book Store' card on the homepage
+	 */
+	async clickBookStoreCard() {
+		await this.bookStoreCard.click();
+	}
 }
