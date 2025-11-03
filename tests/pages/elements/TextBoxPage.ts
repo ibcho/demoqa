@@ -1,12 +1,10 @@
 import { Page, Locator } from '@playwright/test';
 
 /**
- * Page Object Model for the DemoQA.com Elements Section (Text Box)
+ * POM for Elements > Text Box
  */
-export class ElementsPage {
+export class TextBoxPage {
     readonly page: Page;
-    readonly textBoxMenu: Locator;
-    readonly checkBoxMenu: Locator;
     readonly fullNameInput: Locator;
     readonly emailInput: Locator;
     readonly currentAddressInput: Locator;
@@ -16,37 +14,22 @@ export class ElementsPage {
     readonly outputEmail: Locator;
     readonly outputCurrentAddress: Locator;
     readonly outputPermanentAddress: Locator;
-    readonly treeRoot: Locator;
-    readonly resultPanel: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        // Sidebar 'Text Box' menu item
-        this.textBoxMenu = page.getByRole('listitem').filter({ hasText: 'Text Box' });
-        // Sidebar 'Check Box' menu item
-        this.checkBoxMenu = page.getByRole('listitem').filter({ hasText: 'Check Box' });
         this.fullNameInput = page.getByRole('textbox', { name: 'Full Name' });
         this.emailInput = page.getByRole('textbox', { name: 'name@example.com' });
         this.currentAddressInput = page.getByRole('textbox', { name: 'Current Address' });
         this.permanentAddressInput = page.locator('#permanentAddress');
         this.submitButton = page.getByRole('button', { name: 'Submit' });
-        
-        this.outputName = page.getByText('Name:Ibrahim Gavazov'); // should parameterize for reuse
+
+        // NOTE: Consider parameterizing these when asserting
+        this.outputName = page.getByText('Name:Ibrahim Gavazov');
         this.outputEmail = page.getByText('Email:ibrawokring@gmail.com');
         this.outputCurrentAddress = page.getByText('Current Address :Current');
         this.outputPermanentAddress = page.getByText('Permananet Address :Permament');
+    }
 
-        // Check Box page elements
-        this.treeRoot = page.locator('#tree-node');
-        this.resultPanel = page.locator('#result');
-    }
-    // Example action method
-    async navigateToTextBox() {
-        await this.textBoxMenu.click();
-    }
-    async navigateToCheckBox() {
-        await this.checkBoxMenu.click();
-    }
     async fillFullName(name: string) {
         await this.fullNameInput.fill(name);
     }
@@ -63,3 +46,5 @@ export class ElementsPage {
         await this.submitButton.click();
     }
 }
+
+

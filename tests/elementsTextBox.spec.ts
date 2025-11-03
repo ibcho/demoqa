@@ -1,27 +1,28 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from './pages/HomePage';
-import { ElementsPage } from './pages/ElementsPage';
+import { ElementsSidebar } from './pages/elements/ElementsSidebar';
+import { TextBoxPage } from './pages/elements/TextBoxPage';
 
 test.describe('Elements - Text Box', () => {
   test('fills and submits the Text Box form', async ({ page }) => {
     const homePage = new HomePage(page);
-    const elementsPage = new ElementsPage(page);
+    const sidebar = new ElementsSidebar(page);
+    const textBoxPage = new TextBoxPage(page);
 
     await homePage.goto();
     await homePage.clickElementsCard();
+    await sidebar.openTextBox();
+    await textBoxPage.fillFullName('Ibrahim Gavazov');
+    await textBoxPage.fillEmail('ibrawokring@gmail.com');
+    await textBoxPage.emailInput.press('Tab');
+    await textBoxPage.fillCurrentAddress('Current Address TEST');
+    await textBoxPage.fillPermanentAddress('Permament Address TEST');
+    await textBoxPage.submitForm();
 
-    await elementsPage.navigateToTextBox();
-    await elementsPage.fillFullName('Ibrahim Gavazov');
-    await elementsPage.fillEmail('ibrawokring@gmail.com');
-    await elementsPage.emailInput.press('Tab');
-    await elementsPage.fillCurrentAddress('Current Address TEST');
-    await elementsPage.fillPermanentAddress('Permament Address TEST');
-    await elementsPage.submitForm();
-
-    await expect(elementsPage.outputName).toBeVisible();
-    await expect(elementsPage.outputEmail).toBeVisible();
-    await expect(elementsPage.outputCurrentAddress).toBeVisible();
-    await expect(elementsPage.outputPermanentAddress).toBeVisible();
+    await expect(textBoxPage.outputName).toBeVisible();
+    await expect(textBoxPage.outputEmail).toBeVisible();
+    await expect(textBoxPage.outputCurrentAddress).toBeVisible();
+    await expect(textBoxPage.outputPermanentAddress).toBeVisible();
   });
 });
 
