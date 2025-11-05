@@ -16,6 +16,7 @@ export class CheckBoxPage {
         this.page = page;
         this.treeRoot = page.locator('#tree-node');
         this.resultPanel = page.locator('#result');
+        
         this.toggleButton = page.getByRole('button', { name: 'Toggle' });
         this.desktopLabel = page.getByText('Desktop');
         this.documentsLabel = page.getByText('Documents');
