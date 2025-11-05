@@ -1,13 +1,13 @@
 import { Page, Locator } from '@playwright/test';
 
-/**
- * POM for Elements > Radio Button
- */
+
 export class RadioButtonPage {
     readonly page: Page;
     readonly yesRadio: Locator;
     readonly impressiveRadio: Locator;
     readonly noRadio: Locator;
+
+    //labels
     readonly yesLabel: Locator;
     readonly impressiveLabel: Locator;
     readonly noLabel: Locator;
