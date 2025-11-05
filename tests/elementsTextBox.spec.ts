@@ -4,6 +4,8 @@ import { ElementsSidebar } from './pages/elements/ElementsSidebar';
 import { TextBoxPage } from './pages/elements/TextBoxPage';
 
 test.describe('Elements - Text Box', () => {
+  const isCI = !!(globalThis as any).process?.env?.CI;
+  test.skip(isCI, 'External site not reachable in CI');
   test('fills and submits the Text Box form', async ({ page }) => {
     const homePage = new HomePage(page);
     const sidebar = new ElementsSidebar(page);

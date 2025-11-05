@@ -27,7 +27,7 @@ export class HomePage {
      * Navigate to the DemoQA.com home page
      */
     async goto() {
-        await this.page.goto('https://demoqa.com/');
+        await this.page.goto('/');
     }
 
     /**

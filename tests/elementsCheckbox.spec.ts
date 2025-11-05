@@ -4,6 +4,8 @@ import { ElementsSidebar } from './pages/elements/ElementsSidebar';
 import { CheckBoxPage } from './pages/elements/CheckBoxPage';
 
 test.describe('Elements - Check Box', () => {
+  const isCI = !!(globalThis as any).process?.env?.CI;
+  test.skip(isCI, 'External site not reachable in CI');
   let checkBoxPage: CheckBoxPage;
 
   test.beforeEach(async ({ page }) => {
