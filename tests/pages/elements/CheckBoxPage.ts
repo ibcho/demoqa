@@ -23,13 +23,24 @@ export class CheckBoxPage {
         this.downloadsLabel = page.getByText('Downloads');
     }
 
-    async clickNthIcon(n: number) {
-        await this.treeRoot.getByRole('img').nth(n).click();
+    /**
+     * Clicks the nth expand/collapse icon within the tree (0-based index).
+     */
+    async clickTreeIconAt(index: number): Promise<void> {
+        await this.treeRoot.getByRole('img').nth(index).click();
     }
 
-    async clickNthPath(n: number) {
-        await this.page.locator('#tree-node path').nth(n).click();
+    /**
+     * Clicks the nth path element inside the SVG tree (0-based index).
+     * Prefer label clicks when possible; this is a lower-level helper.
+     */
+    async clickTreePathAt(index: number): Promise<void> {
+        await this.page.locator('#tree-node path').nth(index).click();
     }
+
+    // Backward-compatible aliases (kept for now)
+    async clickNthIcon(n: number): Promise<void> { await this.clickTreeIconAt(n); }
+    async clickNthPath(n: number): Promise<void> { await this.clickTreePathAt(n); }
 }
 
 

@@ -14,14 +14,21 @@ export class HomePage {
 
     constructor(page: Page) {
         this.page = page;
-		// Homepage cards
-		this.elementsCard = page.locator('div').filter({ hasText: /^Elements$/ }).first();
-		this.formsCard = page.locator('div').filter({ hasText: /^Forms$/ }).first();
-		this.alertsFrameWindowsCard = page.locator('div').filter({ hasText: /^Alerts, Frame & Windows$/ }).first();
-		this.widgetsCard = page.locator('div').filter({ hasText: /^Widgets$/ }).first();
-		this.interactionsCard = page.locator('div').filter({ hasText: /^Interactions$/ }).first();
-		this.bookStoreCard = page.locator('div:nth-child(6) > div > .card-up');
+		// Homepage cards (selected by visible card titles for readability)
+		this.elementsCard = this.getCard('Elements');
+		this.formsCard = this.getCard('Forms');
+		this.alertsFrameWindowsCard = this.getCard('Alerts, Frame & Windows');
+		this.widgetsCard = this.getCard('Widgets');
+		this.interactionsCard = this.getCard('Interactions');
+		this.bookStoreCard = this.getCard('Book Store Application');
     }
+
+	/**
+	 * Returns the dashboard card by its visible title.
+	 */
+	private getCard(title: string): Locator {
+		return this.page.locator('div').filter({ hasText: new RegExp(`^${title}$`) }).first();
+	}
 
     /**
      * Navigate to the DemoQA.com home page

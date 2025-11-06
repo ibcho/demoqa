@@ -24,24 +24,25 @@ export class RadioButtonPage {
         this.resultText = page.locator('.text-success');
     }
 
-    async selectYes() {
+    async selectYes(): Promise<void> {
         await this.yesLabel.click();
     }
 
-    async selectImpressive() {
+    async selectImpressive(): Promise<void> {
         await this.impressiveLabel.click();
     }
 
-    async isYesEnabled() {
-        return await this.yesRadio.isEnabled();
+    async isYesEnabled(): Promise<boolean> {
+        return this.yesRadio.isEnabled();
     }
 
-    async isImpressiveEnabled() {
-        return await this.impressiveRadio.isEnabled();
+    async isImpressiveEnabled(): Promise<boolean> {
+        return this.impressiveRadio.isEnabled();
     }
 
-    async isNoDisabled() {
-        return !(await this.noRadio.isEnabled());
+    async isNoDisabled(): Promise<boolean> {
+        const enabled = await this.noRadio.isEnabled();
+        return !enabled;
     }
 }
 

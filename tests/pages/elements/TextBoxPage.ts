@@ -10,6 +10,9 @@ export class TextBoxPage {
     readonly currentAddressInput: Locator;
     readonly permanentAddressInput: Locator;
     readonly submitButton: Locator;
+
+    // Output section
+    readonly outputSection: Locator;
     readonly outputName: Locator;
     readonly outputEmail: Locator;
     readonly outputCurrentAddress: Locator;
@@ -23,28 +26,32 @@ export class TextBoxPage {
         this.permanentAddressInput = page.locator('#permanentAddress');
         this.submitButton = page.getByRole('button', { name: 'Submit' });
 
-        // NOTE: Consider parameterizing these when asserting
-        this.outputName = page.getByText('Name:Ibrahim Gavazov');
-        this.outputEmail = page.getByText('Email:ibrawokring@gmail.com');
-        this.outputCurrentAddress = page.getByText('Current Address :Current');
-        this.outputPermanentAddress = page.getByText('Permananet Address :Permament');
+        // DemoQA renders submitted values inside #output with child IDs
+        this.outputSection = page.locator('#output');
+        this.outputName = this.outputSection.locator('#name');
+        this.outputEmail = this.outputSection.locator('#email');
+        this.outputCurrentAddress = this.outputSection.locator('#currentAddress');
+        this.outputPermanentAddress = this.outputSection.locator('#permanentAddress');
     }
 
-    async fillFullName(name: string) {
+    async fillFullName(name: string): Promise<void> {
         await this.fullNameInput.fill(name);
     }
-    async fillEmail(email: string) {
+
+    async fillEmail(email: string): Promise<void> {
         await this.emailInput.fill(email);
     }
-    async fillCurrentAddress(address: string) {
+
+    async fillCurrentAddress(address: string): Promise<void> {
         await this.currentAddressInput.fill(address);
     }
-    async fillPermanentAddress(address: string) {
+
+    async fillPermanentAddress(address: string): Promise<void> {
         await this.permanentAddressInput.fill(address);
     }
-    async submitForm() {
+
+    async submit(): Promise<void> {
         await this.submitButton.click();
     }
 }
-
 

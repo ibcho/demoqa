@@ -18,19 +18,23 @@ export class ElementsSidebar {
         this.webTablesMenu = page.getByRole('listitem').filter({ hasText: 'Web Tables' });
     }
 
-    async openTextBox() {
+    /** Navigate to the 'Text Box' page. */
+    async openTextBox(): Promise<void> {
         await this.textBoxMenu.click();
     }
 
-    async openCheckBox() {
+    /** Navigate to the 'Check Box' page. */
+    async openCheckBox(): Promise<void> {
         await this.checkBoxMenu.click();
     }
 
-    async openRadioButton() {
+    /** Navigate to the 'Radio Button' page. */
+    async openRadioButton(): Promise<void> {
         await this.radioButtonMenu.click();
     }
 
-    async openWebTables() {
+    /** Navigate to the 'Web Tables' page. */
+    async openWebTables(): Promise<void> {
         await this.webTablesMenu.click();
     }
 }

@@ -12,21 +12,26 @@ test.describe('Elements - Radio Button', () => {
     const sidebar = new ElementsSidebar(page);
     const radioPage = new RadioButtonPage(page);
 
-    await homePage.goto();
-    await homePage.clickElementsCard();
-    await sidebar.openRadioButton();
+    await test.step('Navigate to Radio Button page', async () => {
+      await homePage.goto();
+      await homePage.clickElementsCard();
+      await sidebar.openRadioButton();
+      await expect(page).toHaveURL(/.*radio-button/);
+    });
 
-    // Assert enabled/disabled states
-    await expect(radioPage.yesRadio).toBeEnabled();
-    await expect(radioPage.impressiveRadio).toBeEnabled();
-    await expect(radioPage.noRadio).toBeDisabled();
+    await test.step('Verify enabled/disabled states', async () => {
+      await expect(radioPage.yesRadio).toBeEnabled();
+      await expect(radioPage.impressiveRadio).toBeEnabled();
+      await expect(radioPage.noRadio).toBeDisabled();
+    });
 
-    // Interaction sanity check
-    await radioPage.selectYes();
-    await expect(radioPage.resultText).toHaveText('Yes');
+    await test.step('Select and assert results', async () => {
+      await radioPage.selectYes();
+      await expect(radioPage.resultText).toHaveText('Yes');
 
-    await radioPage.selectImpressive();
-    await expect(radioPage.resultText).toHaveText('Impressive');
+      await radioPage.selectImpressive();
+      await expect(radioPage.resultText).toHaveText('Impressive');
+    });
   });
 });
 

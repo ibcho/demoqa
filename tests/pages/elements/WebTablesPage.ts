@@ -40,7 +40,10 @@ export class WebTablesPage {
         this.rowGroups = page.locator('.rt-tbody .rt-tr-group');
     }
 
-    async addRecord(record: WebTableRecord) {
+    /**
+     * Opens the modal, fills the form with the provided record and submits.
+     */
+    async addRecord(record: WebTableRecord): Promise<void> {
         await this.addButton.click();
         await this.firstNameInput.fill(record.firstName);
         await this.lastNameInput.fill(record.lastName);
@@ -51,10 +54,24 @@ export class WebTablesPage {
         await this.submitButton.click();
     }
 
-    async expectRowPresent(record: WebTableRecord) {
-        const row = this.page.locator('.rt-tr-group').filter({
-            has: this.page.getByRole('gridcell', { name: record.email })
+    /**
+     * Returns the row group matching an email value.
+     */
+    rowByEmail(email: string): Locator {
+        return this.page.locator('.rt-tr-group').filter({
+            has: this.page.getByRole('gridcell', { name: email })
         });
+    }
+
+    /**
+     * Returns grid cells for the provided row group.
+     */
+    cellsFor(rowGroup: Locator): Locator {
+        return rowGroup.getByRole('gridcell');
+    }
+
+    async expectRowPresent(record: WebTableRecord): Promise<void> {
+        const row = this.rowByEmail(record.email);
 
         await expect(row).toHaveCount(1);
         await expect(row.getByRole('gridcell', { name: record.firstName })).toBeVisible();
@@ -68,10 +85,10 @@ export class WebTablesPage {
     /**
      * Assert a specific row (1-based index) matches the record values.
      */
-    async expectRowAt(index1Based: number, record: WebTableRecord) {
+    async expectRowAt(index1Based: number, record: WebTableRecord): Promise<void> {
         const zeroBasedIndex = index1Based - 1;
         const row = this.rowGroups.nth(zeroBasedIndex);
-        const cells = this.getRowCells(row);
+        const cells = this.cellsFor(row);
         await expect(cells.nth(0)).toHaveText(record.firstName);
         await expect(cells.nth(1)).toHaveText(record.lastName);
         await expect(cells.nth(2)).toHaveText(String(record.age));
